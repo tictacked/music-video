@@ -1,0 +1,6 @@
+# the kit's env/sep: Demucs stem separation on the CPU (song/separate.py). Its own env because torch is big.
+torch>=2.1
+demucs>=4.1
+julius>=0.2.3
+soundfile>=0.12
+numpy

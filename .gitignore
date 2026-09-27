@@ -1,0 +1,11 @@
+# made by kit/setup.py on each machine: never shared
+kit/env/
+kit/node_modules/
+kit/fonts/
+kit/machine.json
+# test output
+kit/test/out/
+kit/test/work/
+__pycache__/
+*.pyc
+*.log

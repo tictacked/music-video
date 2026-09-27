@@ -1,0 +1,5 @@
+# optional (python setup.py --whisper): word and phrase timings from the vocal stem (song/words.py).
+# The model (~1.6 GB for large-v3-turbo) downloads on first use. CPU works; an NVIDIA GPU is faster.
+faster-whisper>=1.1
+# without this floor a resolver can pick tokenizers 0.13 (no modern wheels: it then needs a Rust compiler)
+tokenizers>=0.20

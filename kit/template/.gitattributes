@@ -1,0 +1,3 @@
+# Byte-exact: no line-ending conversion. With git's core.autocrlf=true (common on Windows) a checkout would
+# rewrite scripts with CRLF, and bash then fails on the \r.
+* -text

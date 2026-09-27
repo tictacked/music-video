@@ -1,0 +1,2 @@
+# Byte-exact: no line-ending conversion, so scripts keep LF on Windows checkouts too.
+* -text

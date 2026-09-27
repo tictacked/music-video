@@ -1,0 +1,14 @@
+{
+  "name": "music-video-kit",
+  "version": "1.0.0",
+  "description": "puppeteer (headless Chrome renders) + roughjs (the page)",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "puppeteer": "^25.11.0",
+    "roughjs": "^4.6.6"
+  }
+}

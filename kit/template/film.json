@@ -1,0 +1,23 @@
+{
+  "name": "newfilm",
+  "title": "NEW FILM",
+  "subtitle": "click to play",
+  "song": "Song -- Artist (year)",
+  "credit": "",
+  "audio": "song/audio.m4a",
+  "port": 8700,
+  "clipLists": ["notes/clips/clips.json"],
+  "clipSkip": [],
+  "posterT": 0,
+  "holdAfter": 0,
+  "share": { "targetMiB": 45, "maxMiB": 49, "audio": "160k", "scale": "1920:1080" },
+  "discord": { "targetMiB": 9.0, "maxMiB": 9.5, "audio": "96k", "scale": "1280:720" },
+  "bpmHint": 120,
+  "whole": [],
+  "nocutPrefixes": ["pl_", "ff_", "i2i_", "sweep", "test"],
+  "keycut": [],
+  "reservedColour": "",
+  "pictures": { "generator": "novelai", "quality": "masterpiece, best quality, highres" },
+  "kit": "",
+  "kitCommit": ""
+}

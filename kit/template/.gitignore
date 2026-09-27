@@ -1,0 +1,66 @@
+# Git keeps what we WROTE for the film: engine and scenes, tools, docs, notes, storyboards,
+# prompts and pick lists, timing data, the RP export.
+# It leaves on disk, untracked, what a machine MADE or we DOWNLOADED: pictures, clips, audio,
+# fonts, renders, venvs, node_modules. Those are big and written once: they need a backup,
+# not version history.
+
+# renders, chunks, range previews, share cuts, QA stills
+/out/
+/notes/stills/
+# a song's words live ONLY in song/private/, and never in git
+/song/private/
+# the inbox of hand-made pictures (filed copies live in assets/gen/)
+/assets/inbox/
+
+# dependencies and caches (no trailing slash: node_modules is a link)
+node_modules
+.venv
+venv
+__pycache__
+*.pyc
+
+# run state and logs
+*.log
+*.err
+*.pid
+ffmpeg2pass*
+.render-slots
+.raw
+
+# media: pictures, video, audio, fonts, arrays, weights, archives
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.bmp
+*.tif
+*.tiff
+*.psd
+*.avif
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.avi
+*.m4v
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.ogg
+*.opus
+*.aac
+*.ttf
+*.otf
+*.woff
+*.woff2
+*.npz
+*.npy
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.zip
+*.7z

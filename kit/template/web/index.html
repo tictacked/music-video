@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>film</title>
+<style>
+  @font-face { font-family: 'Dela Gothic One'; src: url(/assets/fonts/DelaGothicOne-Regular.ttf); }
+  @font-face { font-family: 'Anton'; src: url(/assets/fonts/Anton-Regular.ttf); }
+  @font-face { font-family: 'Caveat Brush'; src: url(/assets/fonts/CaveatBrush-Regular.ttf); }
+  @font-face { font-family: 'Permanent Marker'; src: url(/assets/fonts/PermanentMarker-Regular.ttf); }
+  @font-face { font-family: 'Reenie Beanie'; src: url(/assets/fonts/ReenieBeanie-Regular.ttf); }
+  @font-face { font-family: 'Space Mono'; src: url(/assets/fonts/SpaceMono-Regular.ttf); }
+  @font-face { font-family: 'Space Mono'; src: url(/assets/fonts/SpaceMono-Bold.ttf); font-weight: bold; }
+  @font-face { font-family: 'DM Serif Display'; src: url(/assets/fonts/DMSerifDisplay-Regular.ttf); }
+  @font-face { font-family: 'DM Serif Display'; src: url(/assets/fonts/DMSerifDisplay-Italic.ttf); font-style: italic; }
+  @font-face { font-family: 'Mochiy Pop One'; src: url(/assets/fonts/MochiyPopOne-Regular.ttf); }
+  @font-face { font-family: 'Ma Shan Zheng'; src: url(/assets/fonts/MaShanZheng-Regular.ttf); }
+  @font-face { font-family: 'Rubik Mono One'; src: url(/assets/fonts/RubikMonoOne-Regular.ttf); }
+  @font-face { font-family: 'Bungee'; src: url(/assets/fonts/Bungee-Regular.ttf); }
+  @font-face { font-family: 'Shrikhand'; src: url(/assets/fonts/Shrikhand-Regular.ttf); }
+  @font-face { font-family: 'Pacifico'; src: url(/assets/fonts/Pacifico-Regular.ttf); }
+  @font-face { font-family: 'Caprasimo'; src: url(/assets/fonts/Caprasimo-Regular.ttf); }
+  @font-face { font-family: 'Monoton'; src: url(/assets/fonts/Monoton-Regular.ttf); }
+  @font-face { font-family: 'Rock Salt'; src: url(/assets/fonts/RockSalt-Regular.ttf); }
+  @font-face { font-family: 'Special Elite'; src: url(/assets/fonts/SpecialElite-Regular.ttf); }
+  @font-face { font-family: 'Fontdiner Swanky'; src: url(/assets/fonts/FontdinerSwanky-Regular.ttf); }
+  @font-face { font-family: 'Yellowtail'; src: url(/assets/fonts/Yellowtail-Regular.ttf); }
+  @font-face { font-family: 'Righteous'; src: url(/assets/fonts/Righteous-Regular.ttf); }
+  @font-face { font-family: 'Limelight'; src: url(/assets/fonts/Limelight-Regular.ttf); }
+  @font-face { font-family: 'Knewave'; src: url(/assets/fonts/Knewave-Regular.ttf); }
+  @font-face { font-family: 'DotGothic16'; src: url(/assets/fonts/DotGothic16-Regular.ttf); }
+  @font-face { font-family: 'Shippori Mincho B1'; src: url(/assets/fonts/ShipporiMinchoB1-ExtraBold.ttf); font-weight: 800; }
+  @font-face { font-family: 'VT323'; src: url(/assets/fonts/VT323-Regular.ttf); }
+  @font-face { font-family: 'Rampart One'; src: url(/assets/fonts/RampartOne-Regular.ttf); }
+  @font-face { font-family: 'Courier Prime'; src: url(/assets/fonts/CourierPrime-Regular.ttf); }
+  @font-face { font-family: 'Courier Prime'; src: url(/assets/fonts/CourierPrime-Bold.ttf); font-weight: bold; }
+  @font-face { font-family: 'IM Fell English'; src: url(/assets/fonts/IMFellEnglish-Regular.ttf); }
+  @font-face { font-family: 'IM Fell English'; src: url(/assets/fonts/IMFellEnglish-Italic.ttf); font-style: italic; }
+  @font-face { font-family: 'Playfair Display SC'; src: url(/assets/fonts/PlayfairDisplaySC-Regular.ttf); }
+  @font-face { font-family: 'Graduate'; src: url(/assets/fonts/Graduate-Regular.ttf); }   /* varsity collegiate */
+  /* the live player's colours: restyle per film */
+  :root { --bg: #1b1a1f; --fg: #f6f1e7; --dim: #d9c7a4; --red: #d11f2f; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font: 14px/1.4 'Space Mono', monospace; overflow: hidden; }
+  #stage { position: fixed; inset: 0; display: grid; place-items: center; }
+  #gl { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; }
+  #bar { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px; display: flex; gap: 12px; align-items: center;
+         background: linear-gradient(transparent, rgba(0,0,0,.75)); opacity: 0; transition: opacity .4s; }
+  body:hover #bar, body.paused #bar { opacity: 1; }
+  #bar button { background: none; border: 1px solid var(--dim); color: var(--fg); border-radius: 4px; padding: 4px 12px; cursor: pointer; font: inherit; }
+  #seek { flex: 1; accent-color: var(--red); }
+  #info { color: var(--dim); font-size: 12px; min-width: 26ch; text-align: right; }
+  #cover { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(10,8,12,.72); cursor: pointer; }
+  #cover h1 { font: 800 64px 'Shippori Mincho B1'; letter-spacing: 6px; margin: 0 0 .3em; color: var(--fg); }
+  #cover p { color: var(--dim); margin: 0; text-align: center; }
+  body.render #bar, body.render #cover { display: none; }
+</style>
+<script src="/node_modules/roughjs/bundled/rough.js"></script>
+<script src="timing.js"></script>
+<script src="/film.js"></script>
+<script src="/assets/manifest.js"></script>
+<script src="lib/engine.js"></script>
+<script src="lib/kit.js"></script>
+<script src="/assets/clips/clips.js"></script>
+<script src="lib/shaft.js"></script>
+<!-- the film's own vocabulary (K.v). Any extra vocab file goes in web/lib/ and gets its own script line right after
+     vocab.js (render/film.mjs reads this list, so the node tools load it too) -->
+<script src="lib/vocab.js"></script>
+<script src="lib/cast.js"></script>
+<script src="scenes/_index.js"></script>
+<script src="timeline.js"></script>
+</head>
+<body>
+<div id="stage"><canvas id="gl"></canvas></div>
+<div id="cover"><div><h1 id="ctitle"></h1><p id="csub"></p></div></div>
+<div id="bar"><button id="play">play</button><input id="seek" type="range" min="0" max="1000" value="0"><span id="info"></span></div>
+<audio id="audio" preload="auto"></audio>
+<script>
+// modes:  (default) live player, synced to the audio      ?t=<s> start there
+//         ?mode=render           headless: the renderer calls window.DT_renderFrame(n)
+//         ?scene=<id>&dur=8&at=0&params={}   sandbox: one scene alone on a fake timeline
+//         &strict=1              any missing scene / asset / font is FATAL (the final render)
+const Q = new URLSearchParams(location.search);
+const MODE = Q.get('mode') || 'live';
+const SANDBOX = Q.get('scene');
+const STRICT = Q.get('strict') === '1';
+if (MODE === 'render') document.body.classList.add('render');
+const audio = document.getElementById('audio');
+const FILM = window.DT_FILM || {};   // film.json, served as /film.js by render/serve.mjs
+document.title = FILM.title || 'film';
+document.getElementById('ctitle').textContent = FILM.title || '';
+document.getElementById('csub').textContent = FILM.subtitle || 'click to play';
+if (MODE === 'live') audio.src = '/' + (FILM.audio || 'song/audio.m4a');   // renders never need it (and a new film has no song yet)
+
+async function loadScenes() {
+  for (const f of (window.DT_SCENE_FILES || [])) {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script'); s.src = 'scenes/' + f + '?v=' + Date.now();
+      s.onload = res;
+      s.onerror = () => { if (STRICT) rej(new Error('scene file failed to load: scenes/' + f)); else { console.warn('scene file not found (yet): scenes/' + f); res(); } };
+      document.head.appendChild(s);
+    });
+  }
+}
+const FONTS = ['Dela Gothic One', 'Anton', 'Caveat Brush', 'Permanent Marker', 'Reenie Beanie', 'Space Mono', 'DM Serif Display',
+  'Mochiy Pop One', 'Ma Shan Zheng', 'Rubik Mono One', 'Bungee', 'Shrikhand',
+  'Pacifico', 'Caprasimo', 'Monoton', 'Rock Salt', 'Special Elite', 'Fontdiner Swanky', 'Yellowtail', 'Righteous', 'Limelight', 'Knewave',
+  'DotGothic16', 'VT323', 'Rampart One', 'Courier Prime', 'IM Fell English', 'Playfair Display SC', 'Graduate'];
+async function loadFonts() {
+  const bad = [];
+  await Promise.all(FONTS.map((f) => document.fonts.load(`64px "${f}"`, f === 'Ma Shan Zheng' ? '想' : 'Aa').then((r) => { if (!r.length) bad.push(f); }, () => bad.push(f))));
+  await document.fonts.load('bold 64px "Space Mono"', 'Aa');
+  const sm = await document.fonts.load('800 64px "Shippori Mincho B1"', 'Aa一');   // the SHAFT Mincho (weight 800 only; + CJK)
+  const fi = await document.fonts.load('italic 64px "IM Fell English"', 'Aa');   // the Victorian italic (narration)
+  if (!fi.length) bad.push('IM Fell English italic');
+  if (!sm.length) bad.push('Shippori Mincho B1');
+  return bad;
+}
+window.addEventListener('unhandledrejection', (e) => { window.DT_fatal = String(e.reason && e.reason.message || e.reason); window.DT_ready = true; });
+window.addEventListener('error', (e) => { if (STRICT) { window.DT_fatal = String(e.message); } });
+
+(async function boot() {
+  DT.timing = window.DT_TIMING;
+  DT.initGL(document.getElementById('gl'));
+  const badFonts = await loadFonts();
+  await loadScenes();
+  if (DT.cast && DT.cast.init) DT.cast.init();
+  if (Q.get('trtest')) {      // a transition alone: trA -> trB at 2.0 s (testcard.js)
+    DT.buildShots([{ id: 'trA', scene: 'trA', at: 0 }, { id: 'trB', scene: 'trB', at: 2, trans: { type: Q.get('trtest'), dur: +(Q.get('trdur') || 1) } }, { id: 'end', at: 4 }]);
+  } else if (SANDBOX) {
+    const dur = +(Q.get('dur') || 8), at = +(Q.get('at') || 0);
+    const params = Q.get('params') ? JSON.parse(Q.get('params')) : {};
+    DT.buildShots([{ id: 'sandbox_' + SANDBOX, scene: SANDBOX, at, params }, { id: 'end', at: Math.min(at + dur, DT.timing.duration - 0.01) }]);
+  } else DT.buildShots(DT.assembleTimeline ? DT.assembleTimeline() : DT.TIMELINE);
+  const problems = [];
+  if (badFonts.length) problems.push('fonts did not load: ' + badFonts.join(', '));
+  if (!window.DT_TIMING) problems.push('timing.js did not load');
+  if (!window.DT_FILM) problems.push('film.js did not load (serve the page with node render/serve.mjs)');
+  for (const s of DT.shots) if (!DT.scenes[s.scene]) problems.push('shot ' + s.id + ' has no scene "' + s.scene + '"');
+  if (!SANDBOX) for (const s of DT.shots) if (s.scene === '__missing' && s.params && s.params.reel) problems.push('reel ' + s.params.reel + ' has no shots yet');
+  if (problems.length) { console.warn('PROBLEMS: ' + problems.join('; ')); if (STRICT) window.DT_fatal = problems.join('; '); }
+  if (MODE === 'live') startLive();
+  window.DT_ready = true;
+})().catch((e) => { console.error(e); window.DT_fatal = String(e && e.stack || e); window.DT_ready = true; });
+
+window.DT_renderFrame = async function (n) {
+  DT.missing = null;
+  const info = await DT.renderFrame(n);
+  if (DT.missing && DT.missing.size) {
+    const m = [...DT.missing].join(', ');
+    if (STRICT) throw new Error('assets drawn before they loaded (declare them in scene.assets): ' + m);
+    console.warn('undeclared assets (declare them in scene.assets): ' + m);
+    info.missing = m;
+  }
+  return info;
+};
+
+// ------------------------------------------------------------------ live player
+function startLive() {
+  const cover = document.getElementById('cover'), btn = document.getElementById('play'), seek = document.getElementById('seek'), info = document.getElementById('info');
+  const t0 = +(Q.get('t') || 0);
+  audio.currentTime = t0;
+  let current = -1, busy = false;
+  const paint = async (f) => { busy = true; try { const i = await DT.renderFrame(f); info.textContent = `${(f / DT.FPS).toFixed(1)}s  ${i.shot}`; } catch (e) { console.error(e); } busy = false; current = f; };
+  paint(Math.round(t0 * DT.FPS));
+  document.body.classList.add('paused');
+  const toggle = () => { if (audio.paused) { audio.play(); cover.style.display = 'none'; document.body.classList.remove('paused'); } else { audio.pause(); document.body.classList.add('paused'); } };
+  cover.onclick = toggle; btn.onclick = toggle;
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { e.preventDefault(); toggle(); }
+    if (e.code === 'ArrowRight') audio.currentTime += 5;
+    if (e.code === 'ArrowLeft') audio.currentTime -= 5;
+  });
+  seek.oninput = () => { audio.currentTime = seek.value / 1000 * (audio.duration || DT.timing.duration); };
+  const tick = () => {
+    requestAnimationFrame(tick);
+    const f = Math.floor(audio.currentTime * DT.FPS);
+    btn.textContent = audio.paused ? 'play' : 'pause';
+    seek.value = Math.round(audio.currentTime / (audio.duration || DT.timing.duration) * 1000);
+    if (busy || f === current) return;
+    paint(f);
+  };
+  tick();
+}
+</script>
+</body>
+</html>
